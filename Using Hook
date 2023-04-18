@@ -1,0 +1,31 @@
+import React, { useState, useEffect } from 'react';
+
+function SearchComponent(props) {
+  const [query, setQuery] = useState('');
+
+  useEffect(() => {
+    const delayDebounceFn = setTimeout(() => {
+      props.onSearch(query);
+    }, 1000);
+
+    return () => clearTimeout(delayDebounceFn);
+  }, [query, props]);
+
+  const handleInputChange = (event) => {
+    const input = event.target.value;
+    setQuery(input);
+  };
+  
+  return (
+    <div>
+      <input
+        type="text"
+        placeholder="Search..."
+        value={query}
+        onChange={handleInputChange}
+      />
+    </div>
+  );
+}
+
+export default SearchComponent;
